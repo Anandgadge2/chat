@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #0b141a; /* Dark background to contrast the mobile phone frame */
+  color: #111827;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* WhatsApp subtle background pattern */
+.whatsapp-bg {
+  background-color: #efeae2;
+  background-image: radial-gradient(#dfd9d0 1px, transparent 0), radial-gradient(#dfd9d0 1px, #efeae2 1px);
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
+  position: relative;
+}
+
+/* Glassmorphism language picker overlay */
+.glass-overlay {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile scrollbar hiding */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar for the chat area */
+.chat-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Outgoing Message Bubble with CSS Tail */
+.bubble-out {
+  position: relative;
+  background-color: #dcf8c6;
+  border-radius: 8px 0px 8px 8px;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+  animation: slideInRight 0.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+.bubble-out::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-top: 0px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 8px solid #dcf8c6;
+}
+
+/* Incoming Message Bubble with CSS Tail */
+.bubble-in {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 0px 8px 8px 8px;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+  animation: slideInLeft 0.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+.bubble-in::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-top: 0px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 8px solid #ffffff;
+}
+
+/* Bouncing Dots Animation for Typing Indicator */
+@keyframes bounce-dot {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.dot-bounce-1 {
+  animation: bounce-dot 1s infinite 0.1s;
+}
+.dot-bounce-2 {
+  animation: bounce-dot 1s infinite 0.25s;
+}
+.dot-bounce-3 {
+  animation: bounce-dot 1s infinite 0.4s;
+}
+
+/* Mic pulse animation */
+@keyframes pulse-mic {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.mic-pulse {
+  animation: pulse-mic 1.5s infinite;
+}
+
+/* Slide in animations */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Focus styles */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 2px solid #128c7e;
+  outline-offset: 2px;
+}
+
+/* Global variables */
+:root {
+  --color-primary: #128c7e;
+  --color-secondary: #25d366;
+  --color-light: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-bg-white: #ffffff;
+}
