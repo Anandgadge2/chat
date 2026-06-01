@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-neutral-900 flex items-center justify-center min-h-screen">
+      <body className="bg-[#eef2f1] flex items-center justify-center min-h-screen">
         <div id="root" className="w-full flex items-center justify-center">
           {children}
         </div>

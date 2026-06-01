@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import VoiceInputButton from './VoiceInputButton';
 import type { Language } from '@/types/chat';
+import { getLocalTranslation } from '@/lib/localTranslations';
+import { getUiTranslation } from '@/lib/uiTranslations';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -13,6 +15,9 @@ interface ChatInputProps {
 
 async function translateText(text: string, targetLanguage: Language): Promise<string> {
   if (targetLanguage === 'en') return text;
+  const localTranslation = getLocalTranslation(text, targetLanguage);
+  if (localTranslation !== text) return localTranslation;
+
   try {
     const response = await fetch('/api/translate', {
       method: 'POST',
@@ -38,13 +43,19 @@ export default function ChatInput({
   placeholder = 'Type your issue here...',
 }: ChatInputProps) {
   const [message, setMessage] = useState('');
-  const [originalMessage, setOriginalMessage] = useState('');
+  const [isListening, setIsListening] = useState(false);
   const [translatedPlaceholder, setTranslatedPlaceholder] = useState(placeholder);
+  const voiceBaseRef = useRef('');
 
   useEffect(() => {
     async function translatePlaceholder() {
       if (selectedLanguage === 'en') {
         setTranslatedPlaceholder('Type a message...');
+        return;
+      }
+      const localPlaceholder = getUiTranslation('Type a message...', selectedLanguage);
+      if (localPlaceholder !== 'Type a message...') {
+        setTranslatedPlaceholder(localPlaceholder);
         return;
       }
       const trans = await translateText('Type a message...', selectedLanguage);
@@ -57,7 +68,7 @@ export default function ChatInput({
     if (message.trim()) {
       onSendMessage(message);
       setMessage('');
-      setOriginalMessage('');
+      voiceBaseRef.current = '';
     }
   };
 
@@ -68,20 +79,25 @@ export default function ChatInput({
     }
   };
 
-  const handleVoiceInput = (text: string) => {
-    setMessage(originalMessage ? `${originalMessage} ${text}` : text);
+  const handleVoiceInput = (text: string, isFinal: boolean) => {
+    const combined = `${voiceBaseRef.current}${voiceBaseRef.current && text ? ' ' : ''}${text}`.trim();
+    setMessage(combined);
+
+    if (isFinal && combined) {
+      voiceBaseRef.current = combined;
+    }
   };
 
   const hasText = message.trim().length > 0;
 
   return (
     <div className="flex items-center gap-2 px-3 py-2 bg-transparent select-none">
-      {/* Left Input Capsule (White bubble like WhatsApp) */}
-      <div className="flex-1 bg-white rounded-full px-3 py-1 flex items-center shadow-sm border border-neutral-100 min-w-0">
+      {/* Left Input Capsule */}
+      <div className="flex-1 bg-white rounded-full px-3 py-1 flex items-center shadow-soft border border-slate-200/80 min-w-0 transition-shadow focus-within:shadow-card focus-within:border-emerald-200">
         {/* Emoji Button Icon */}
         <button
           type="button"
-          className="p-1.5 text-neutral-400 hover:text-neutral-500 transition-colors shrink-0"
+          className="p-1.5 text-slate-300 hover:text-slate-400 transition-colors shrink-0"
           title="Emojis"
         >
           <svg
@@ -90,7 +106,7 @@ export default function ChatInput({
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-5.5 h-5.5"
           >
             <path
               strokeLinecap="round"
@@ -108,13 +124,13 @@ export default function ChatInput({
           onKeyDown={handleKeyPress}
           placeholder={translatedPlaceholder}
           disabled={disabled}
-          className="flex-1 min-w-0 bg-transparent py-2.5 px-2 text-sm text-neutral-800 placeholder-neutral-400 focus:outline-none disabled:opacity-50"
+          className="flex-1 min-w-0 bg-transparent py-2.5 px-2 text-sm text-slate-700 placeholder-slate-300 focus:outline-none disabled:opacity-50"
         />
 
         {/* Attachment Pin Icon */}
         <button
           type="button"
-          className="p-1.5 text-neutral-400 hover:text-neutral-500 transition-colors shrink-0"
+          className="p-1.5 text-slate-300 hover:text-slate-400 transition-colors shrink-0"
           title="Attach file"
         >
           <svg
@@ -123,7 +139,7 @@ export default function ChatInput({
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            className="w-5.5 h-5.5 rotate-45"
+            className="w-5 h-5 rotate-45"
           >
             <path
               strokeLinecap="round"
@@ -136,11 +152,11 @@ export default function ChatInput({
 
       {/* Right Action Button (Voice Input toggles with Send Button) */}
       <div className="shrink-0">
-        {hasText ? (
+        {hasText && !isListening ? (
           <button
             onClick={handleSendMessage}
             disabled={disabled}
-            className="w-11 h-11 rounded-full bg-[#00a884] hover:bg-[#008f72] text-white flex items-center justify-center shadow-md active:scale-95 transition-all"
+            className="w-11 h-11 rounded-full bg-[#0f766e] hover:bg-[#115e59] text-white flex items-center justify-center shadow-card active:scale-95 transition-all"
             type="button"
             title="Send message"
           >
@@ -156,7 +172,10 @@ export default function ChatInput({
         ) : (
           <VoiceInputButton
             onVoiceInput={handleVoiceInput}
-            onStart={() => setOriginalMessage(message)}
+            onStart={() => {
+              voiceBaseRef.current = message.trim();
+            }}
+            onListeningChange={setIsListening}
             onError={(error) => {
               console.error('Voice input error:', error);
             }}

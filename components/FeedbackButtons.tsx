@@ -68,7 +68,7 @@ export default function FeedbackButtons({
       <button
         onClick={onYes}
         disabled={disabled}
-        className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-whatsapp-green hover:bg-green-600 text-white font-semibold rounded-full shadow-sm transition-all hover:shadow active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+        className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold rounded-full shadow-soft transition-all hover:shadow-card active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ export default function FeedbackButtons({
       <button
         onClick={onNo}
         disabled={disabled}
-        className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-full shadow-sm transition-all hover:shadow active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+        className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-full transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

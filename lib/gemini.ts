@@ -2,9 +2,25 @@ import type { MatchIssueResponse } from '@/types/support';
 import { getCompactIssueList } from './supportIssues';
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = 'gemini-1.5-flash';
-const GEMINI_API_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models';
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
+const GEMINI_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
+
+/**
+ * Helper: build the full Gemini generateContent URL for the configured model.
+ */
+function getGeminiUrl(): string {
+  return `${GEMINI_BASE_URL}/${GEMINI_MODEL}:generateContent`;
+}
+
+/**
+ * Helper: common headers for all Gemini requests.
+ */
+function getGeminiHeaders(): Record<string, string> {
+  return {
+    'Content-Type': 'application/json',
+    'x-goog-api-key': GEMINI_API_KEY!,
+  };
+}
 
 export async function matchIssueWithGemini(
   userMessage: string,
@@ -47,36 +63,31 @@ Match the user message to the nearest known support issue.
 Return only JSON. Do not include any other text.`;
 
   try {
-    const response = await fetch(
-      `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    const response = await fetch(getGeminiUrl(), {
+      method: 'POST',
+      headers: getGeminiHeaders(),
+      body: JSON.stringify({
+        system_instruction: {
+          parts: [{ text: systemPrompt }],
         },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemPrompt }],
+        contents: [
+          {
+            parts: [{ text: userPrompt }],
           },
-          contents: [
-            {
-              parts: [{ text: userPrompt }],
-            },
-          ],
-          generation_config: {
-            temperature: 0.1,
-            topP: 0.8,
-            topK: 40,
-            maxOutputTokens: 300,
-          },
-        }),
-      }
-    );
+        ],
+        generation_config: {
+          temperature: 0.1,
+          topP: 0.8,
+          topK: 40,
+          maxOutputTokens: 300,
+        },
+      }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Gemini API error:', errorData);
-      throw new Error(`Gemini API error: ${response.status}`);
+      throw new Error(`Gemini API error: ${response.status} - ${JSON.stringify(errorData)}`);
     }
 
     const data = await response.json();
@@ -117,59 +128,48 @@ export async function translateWithGemini(
     throw new Error('Gemini API key not configured');
   }
 
-  const systemPrompt = `You are a translator for the PugArch FSM mobile app support system.
-Translate the provided text into the target language.
+  const prompt = `You are a translator for the PugArch FSM mobile app support system.
+Translate the following text into ${targetLanguage}.
 Keep the meaning exact and simple.
 Maintain technical terms accurately.
 Do not add or remove information.
-Return only the translated text, no explanations.`;
-
-  const userPrompt = `Translate the following PugArch FSM support response into the target language.
-Keep the meaning exact.
-Keep steps short and simple.
-Do not add new information.
-Do not remove important instructions.
-Keep issue codes and app name unchanged.
-
-Target language: ${targetLanguage}
+Return only the translated text, no explanations.
 
 Text to translate:
 ${text}`;
 
   try {
-    const response = await fetch(
-      `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    const response = await fetch(getGeminiUrl(), {
+      method: 'POST',
+      headers: getGeminiHeaders(),
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: prompt }],
+          },
+        ],
+        generation_config: {
+          temperature: 0.1,
+          topP: 0.8,
+          topK: 40,
+          maxOutputTokens: 2000,
         },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemPrompt }],
-          },
-          contents: [
-            {
-              parts: [{ text: userPrompt }],
-            },
-          ],
-          generation_config: {
-            temperature: 0.1,
-            topP: 0.8,
-            topK: 40,
-            maxOutputTokens: 2000,
-          },
-        }),
-      }
-    );
+      }),
+    });
 
     if (!response.ok) {
-      throw new Error(`Gemini translation API error: ${response.status}`);
+      const errorData = await response.json();
+      console.error('Gemini API full error:', errorData);
+      throw new Error(`Gemini translation API error: ${response.status} - ${JSON.stringify(errorData)}`);
     }
 
     const data = await response.json();
     const translatedText =
-      data.candidates?.[0]?.content?.parts?.[0]?.text || text;
+      data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+    if (!translatedText) {
+      throw new Error('Gemini returned empty translation');
+    }
 
     return translatedText;
   } catch (error) {
@@ -209,34 +209,31 @@ Target Language: "${targetLanguage}"
 Generate the formatted support response directly in the target language.`;
 
   try {
-    const response = await fetch(
-      `${GEMINI_API_URL}/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    const response = await fetch(getGeminiUrl(), {
+      method: 'POST',
+      headers: getGeminiHeaders(),
+      body: JSON.stringify({
+        system_instruction: {
+          parts: [{ text: systemPrompt }],
         },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemPrompt }],
+        contents: [
+          {
+            parts: [{ text: userPrompt }],
           },
-          contents: [
-            {
-              parts: [{ text: userPrompt }],
-            },
-          ],
-          generation_config: {
-            temperature: 0.2,
-            topP: 0.8,
-            topK: 40,
-            maxOutputTokens: 1000,
-          },
-        }),
-      }
-    );
+        ],
+        generation_config: {
+          temperature: 0.2,
+          topP: 0.8,
+          topK: 40,
+          maxOutputTokens: 1000,
+        },
+      }),
+    });
 
     if (!response.ok) {
-      throw new Error(`Gemini solution format API error: ${response.status}`);
+      const errorData = await response.json();
+      console.error('Gemini API full error:', errorData);
+      throw new Error(`Gemini solution format API error: ${response.status} - ${JSON.stringify(errorData)}`);
     }
 
     const data = await response.json();

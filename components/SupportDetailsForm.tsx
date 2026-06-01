@@ -156,13 +156,16 @@ export default function SupportDetailsForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mt-3 bg-white p-4 rounded-2xl border border-neutral-200 shadow-lg max-w-sm mx-auto animate-[slideInUp_0.25s_cubic-bezier(0.1,0.8,0.3,1)]">
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-[11px] text-yellow-800 leading-normal">
-        🔒 {privacyNoteText}
+    <form onSubmit={handleSubmit} className="space-y-3.5 mt-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-card max-w-sm mx-auto animate-[slideInUp_0.25s_cubic-bezier(0.1,0.8,0.3,1)]">
+      {/* Privacy Note */}
+      <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-[11px] text-[#0f766e] leading-normal flex items-start gap-2">
+        <span className="text-sm mt-[-1px]">🔒</span>
+        <span>{privacyNoteText}</span>
       </div>
 
+      {/* Full Name */}
       <div>
-        <label htmlFor="fullName" className="block text-xs font-semibold text-neutral-600 mb-1">
+        <label htmlFor="fullName" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
           {labels.fullName}
         </label>
         <input
@@ -172,15 +175,16 @@ export default function SupportDetailsForm({
           onChange={(e) => setFullName(e.target.value)}
           placeholder={placeholders.fullName}
           disabled={isLoading}
-          className="w-full px-3 py-2 border border-neutral-200 focus:border-whatsapp-darkTeal rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-whatsapp-darkTeal disabled:bg-neutral-100"
+          className="w-full px-3.5 py-2.5 border border-slate-200 focus:border-[#0f766e] rounded-xl text-sm bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition-all disabled:bg-slate-100 disabled:opacity-60"
         />
         {errors.fullName && (
           <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.fullName}</p>
         )}
       </div>
 
+      {/* Contact Number */}
       <div>
-        <label htmlFor="contactNumber" className="block text-xs font-semibold text-neutral-600 mb-1">
+        <label htmlFor="contactNumber" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
           {labels.contactNumber}
         </label>
         <input
@@ -190,15 +194,16 @@ export default function SupportDetailsForm({
           onChange={(e) => setContactNumber(e.target.value)}
           placeholder={placeholders.contactNumber}
           disabled={isLoading}
-          className="w-full px-3 py-2 border border-neutral-200 focus:border-whatsapp-darkTeal rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-whatsapp-darkTeal disabled:bg-neutral-100"
+          className="w-full px-3.5 py-2.5 border border-slate-200 focus:border-[#0f766e] rounded-xl text-sm bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition-all disabled:bg-slate-100 disabled:opacity-60"
         />
         {errors.contactNumber && (
           <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.contactNumber}</p>
         )}
       </div>
 
+      {/* Designation */}
       <div>
-        <label htmlFor="designation" className="block text-xs font-semibold text-neutral-600 mb-1">
+        <label htmlFor="designation" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
           {labels.designation}
         </label>
         <input
@@ -208,15 +213,16 @@ export default function SupportDetailsForm({
           onChange={(e) => setDesignation(e.target.value)}
           placeholder={placeholders.designation}
           disabled={isLoading}
-          className="w-full px-3 py-2 border border-neutral-200 focus:border-whatsapp-darkTeal rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-whatsapp-darkTeal disabled:bg-neutral-100"
+          className="w-full px-3.5 py-2.5 border border-slate-200 focus:border-[#0f766e] rounded-xl text-sm bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition-all disabled:bg-slate-100 disabled:opacity-60"
         />
         {errors.designation && (
           <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.designation}</p>
         )}
       </div>
 
+      {/* Department */}
       <div>
-        <label htmlFor="department" className="block text-xs font-semibold text-neutral-600 mb-1">
+        <label htmlFor="department" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
           {labels.department}
         </label>
         <input
@@ -226,15 +232,16 @@ export default function SupportDetailsForm({
           onChange={(e) => setDepartment(e.target.value)}
           placeholder={placeholders.department}
           disabled={isLoading}
-          className="w-full px-3 py-2 border border-neutral-200 focus:border-whatsapp-darkTeal rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-whatsapp-darkTeal disabled:bg-neutral-100"
+          className="w-full px-3.5 py-2.5 border border-slate-200 focus:border-[#0f766e] rounded-xl text-sm bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition-all disabled:bg-slate-100 disabled:opacity-60"
         />
         {errors.department && (
           <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.department}</p>
         )}
       </div>
 
+      {/* Issue Description */}
       <div>
-        <label htmlFor="issueDescription" className="block text-xs font-semibold text-neutral-600 mb-1">
+        <label htmlFor="issueDescription" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
           {labels.issueDescription}
         </label>
         <textarea
@@ -244,18 +251,19 @@ export default function SupportDetailsForm({
           placeholder={placeholders.issueDescription}
           disabled={isLoading}
           rows={3}
-          className="w-full px-3 py-2 border border-neutral-200 focus:border-whatsapp-darkTeal rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-whatsapp-darkTeal disabled:bg-neutral-100 resize-none"
+          className="w-full px-3.5 py-2.5 border border-slate-200 focus:border-[#0f766e] rounded-xl text-sm bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition-all disabled:bg-slate-100 disabled:opacity-60 resize-none"
         />
         {errors.issueDescription && (
           <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.issueDescription}</p>
         )}
       </div>
 
-      <div className="flex gap-3 pt-2">
+      {/* Action Buttons */}
+      <div className="flex gap-3 pt-1">
         <button
           type="submit"
           disabled={isLoading}
-          className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-whatsapp-green hover:bg-green-600 text-white font-semibold rounded-full shadow-sm transition-all hover:shadow active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+          className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#0f766e] hover:bg-[#115e59] text-white font-semibold rounded-full shadow-soft transition-all hover:shadow-card active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
         >
           {isLoading ? '⏳' : '📤'}
           <span>{submitBtnText}</span>
@@ -264,7 +272,7 @@ export default function SupportDetailsForm({
           type="button"
           onClick={onCancel}
           disabled={isLoading}
-          className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-semibold rounded-full transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+          className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-full transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
         >
           <span>{cancelBtnText}</span>
         </button>

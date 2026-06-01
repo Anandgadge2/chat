@@ -30,6 +30,7 @@ import {
   getIssuesByCategory,
 } from '@/lib/supportIssues';
 import { logError, logInfo } from '@/lib/logger';
+import { getUiTranslation } from '@/lib/uiTranslations';
 
 type ChatFlow =
   | 'welcome'
@@ -85,6 +86,7 @@ async function translateMessage(
 
 export default function ChatWindow({ onSessionClose }: ChatWindowProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [session, setSession] = useState<ChatSession>({
     id: uuidv4(),
     language: 'en',
@@ -102,12 +104,14 @@ export default function ChatWindow({ onSessionClose }: ChatWindowProps) {
   const hasInitialized = useRef(false);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [session.messages]);
+  }, [session.messages, flow, showFeedback]);
 
   const addBotMessage = useCallback(
     async (content: string, issueCode?: string) => {
@@ -398,44 +402,49 @@ export default function ChatWindow({ onSessionClose }: ChatWindowProps) {
   };
 
   return (
-    <div className="flex flex-col h-full w-full relative overflow-hidden bg-[#efeae2] select-none">
-      {/* WhatsApp Header bar */}
-      <div className="bg-whatsapp-teal text-white px-3 py-3 flex items-center justify-between shadow-sm shrink-0 z-10 sm:pt-9">
-        <div className="flex items-center gap-2">
+    <div className="flex flex-col h-full w-full relative overflow-hidden bg-transparent select-none">
+      {/* Chat support header */}
+      <div className="bg-[#075e54] text-white px-4 py-3 flex items-center justify-between shadow-[0_8px_24px_rgba(15,23,42,0.12)] shrink-0 z-[200] sm:pt-9">
+        <div className="flex items-center gap-3">
           {/* Back Icon */}
-          <button className="p-1 hover:bg-white/10 rounded-full transition-colors hidden sm:block">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 text-white">
+          <button className="p-1.5 hover:bg-white/10 rounded-full transition-colors hidden sm:block text-white/80 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
           </button>
           
           {/* Bot avatar */}
-          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-lg border border-white/10">
-            🤖
+          <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-lg shadow-soft ring-2 ring-white/20">
+            <span className="text-white text-sm font-bold">PA</span>
           </div>
           
           {/* User Status details */}
           <div className="flex flex-col">
-            <span className="font-semibold text-sm leading-tight">PugArch Support</span>
-            <span className="text-[10px] text-white/80 flex items-center gap-1 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-whatsapp-green animate-pulse" />
+            <span className="font-semibold text-sm text-white leading-tight">PugArch Support</span>
+            <span className="text-[10px] text-white/70 flex items-center gap-1.5 mt-0.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               online
             </span>
           </div>
         </div>
         
         {/* Globe Language Picker */}
-        <LanguageSelector
-          selectedLanguage={selectedLanguage}
-          onLanguageChange={handleLanguageChange}
-          disabled={isLoading}
-        />
+        <div>
+          <LanguageSelector
+            selectedLanguage={selectedLanguage}
+            onLanguageChange={handleLanguageChange}
+            disabled={isLoading}
+          />
+        </div>
       </div>
 
-      {/* Chat Messages scrolled area */}
-      <div className="flex-1 overflow-y-auto whatsapp-bg chat-scrollbar px-4 py-4 space-y-1">
+      {/* Chat Messages scrolled area — KEY FIX: min-h-0 enables flex child scrolling */}
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 min-h-0 overflow-y-auto whatsapp-bg chat-scrollbar px-4 py-4 space-y-1"
+      >
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-xs font-semibold shadow-sm flex items-start gap-1.5 animate-[fadeIn_0.2s_ease-out]">
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-2xl text-red-600 text-xs font-semibold shadow-sm flex items-start gap-1.5 animate-[fadeIn_0.2s_ease-out]">
             <span>⚠️</span>
             <span>{error}</span>
           </div>
@@ -451,92 +460,92 @@ export default function ChatWindow({ onSessionClose }: ChatWindowProps) {
 
         {isLoading && (
           <div className="flex justify-start mb-4 animate-[slideInLeft_0.2s_ease-out]">
-            <div className="w-8 h-8 rounded-full bg-whatsapp-teal flex items-center justify-center text-white text-xs font-bold shrink-0 mt-1 select-none">
-              🤖
+            <div className="w-8 h-8 rounded-full bg-[#075e54] flex items-center justify-center text-xs font-bold shrink-0 mt-1 select-none shadow-soft">
+              <span className="text-white text-[10px] font-bold">PA</span>
             </div>
-            <div className="ml-2 bg-white px-4 py-3 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-1 select-none max-w-[200px]">
+            <div className="ml-2 bg-white px-4 py-3 rounded-2xl rounded-tl-none shadow-soft border border-slate-100 flex items-center gap-1.5 select-none max-w-[200px]">
               {/* Bouncing dots typing indicator */}
-              <div className="w-2 h-2 rounded-full bg-neutral-400 dot-bounce-1" />
-              <div className="w-2 h-2 rounded-full bg-neutral-400 dot-bounce-2" />
-              <div className="w-2 h-2 rounded-full bg-neutral-400 dot-bounce-3" />
+              <div className="w-2 h-2 rounded-full bg-[#0f766e] dot-bounce-1" />
+              <div className="w-2 h-2 rounded-full bg-[#0f766e] dot-bounce-2" />
+              <div className="w-2 h-2 rounded-full bg-[#0f766e] dot-bounce-3" />
             </div>
+          </div>
+        )}
+
+        {/* Interactive Chat Selection Options rendered inside scroll flow */}
+        {flow !== 'success' && (
+          <div className="py-2.5 w-full z-10 shrink-0">
+            {flow === 'welcome' && (
+              <CategorySelector
+                categories={getCategories()}
+                onSelectCategory={handleCategorySelect}
+                disabled={isLoading}
+                selectedLanguage={selectedLanguage}
+              />
+            )}
+
+            {flow === 'issue' && selectedCategory && (
+              <IssueOptions
+                issues={getIssuesByCategory(selectedCategory).map((issue) => ({
+                  code: issue.code,
+                  title: issue.title,
+                }))}
+                onSelectIssue={handleIssueSelect}
+                onSelectOther={() => {
+                  addBotMessage(SOMETHING_ELSE_MESSAGE);
+                  setFlow('solution');
+                }}
+                disabled={isLoading}
+                selectedLanguage={selectedLanguage}
+              />
+            )}
+
+            {flow === 'feedback' && showFeedback && (
+              <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-card max-w-sm mx-auto space-y-2 animate-[slideInUp_0.25s_cubic-bezier(0.1,0.8,0.3,1)]">
+                <p className="text-sm font-semibold text-slate-700 text-center">
+                  {getUiTranslation('Was this helpful?', selectedLanguage)}
+                </p>
+                <FeedbackButtons
+                  onYes={handleYesFeedback}
+                  onNo={handleNoFeedback}
+                  disabled={isLoading}
+                  selectedLanguage={selectedLanguage}
+                />
+              </div>
+            )}
+
+            {flow === 'escalation' && (
+              <SupportDetailsForm
+                onSubmit={handleEscalationSubmit}
+                onCancel={handleReset}
+                isLoading={isLoading}
+                selectedLanguage={selectedLanguage}
+              />
+            )}
           </div>
         )}
 
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Interactive Chat Selection Options Floating above bottom bar */}
-      {flow !== 'success' && (
-        <div className="px-3 pb-1 pt-2 w-full z-10">
-          {flow === 'welcome' && (
-            <CategorySelector
-              categories={getCategories()}
-              onSelectCategory={handleCategorySelect}
-              disabled={isLoading}
-              selectedLanguage={selectedLanguage}
-            />
-          )}
-
-          {flow === 'issue' && selectedCategory && (
-            <IssueOptions
-              issues={getIssuesByCategory(selectedCategory).map((issue) => ({
-                code: issue.code,
-                title: issue.title,
-              }))}
-              onSelectIssue={handleIssueSelect}
-              onSelectOther={() => {
-                addBotMessage(SOMETHING_ELSE_MESSAGE);
-                setFlow('solution');
-              }}
-              disabled={isLoading}
-              selectedLanguage={selectedLanguage}
-            />
-          )}
-
-          {flow === 'feedback' && showFeedback && (
-            <div className="bg-white p-4 rounded-2xl border border-neutral-200 shadow-md max-w-sm mx-auto space-y-2 animate-[slideInUp_0.25s_cubic-bezier(0.1,0.8,0.3,1)]">
-              <p className="text-sm font-semibold text-neutral-800 text-center">
-                Was this helpful?
-              </p>
-              <FeedbackButtons
-                onYes={handleYesFeedback}
-                onNo={handleNoFeedback}
-                disabled={isLoading}
-                selectedLanguage={selectedLanguage}
-              />
-            </div>
-          )}
-
-          {flow === 'escalation' && (
-            <SupportDetailsForm
-              onSubmit={handleEscalationSubmit}
-              onCancel={handleReset}
-              isLoading={isLoading}
-              selectedLanguage={selectedLanguage}
-            />
-          )}
-        </div>
-      )}
-
       {/* Start New Chat Button */}
       {flow === 'success' && (
-        <div className="px-4 py-3 bg-transparent z-10">
+        <div className="px-4 py-3 bg-transparent z-10 shrink-0">
           <button
             onClick={handleReset}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-whatsapp-green hover:bg-green-600 text-white font-semibold rounded-full shadow-md transition-all active:scale-98"
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#0f766e] hover:bg-[#115e59] text-white font-semibold rounded-full shadow-card transition-all active:scale-[0.98]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
             </svg>
-            <span>Start New Chat</span>
+            <span>{getUiTranslation('Start New Chat', selectedLanguage)}</span>
           </button>
         </div>
       )}
 
-      {/* Bottom WhatsApp Message Input capsule */}
+      {/* Bottom Message Input capsule */}
       {(flow === 'solution' || flow === 'welcome' || flow === 'issue') && (
-        <div className="shrink-0 bg-transparent pb-3 pt-1">
+        <div className="shrink-0 bg-white/80 backdrop-blur-sm border-t border-slate-100 pb-3 pt-1">
           <ChatInput
             onSendMessage={handleFreetextInput}
             selectedLanguage={selectedLanguage}
@@ -544,6 +553,9 @@ export default function ChatWindow({ onSessionClose }: ChatWindowProps) {
           />
         </div>
       )}
+
+      {/* Portal target for language selector modal */}
+      <div id="language-selector-portal" />
     </div>
   );
 }

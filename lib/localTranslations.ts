@@ -18,6 +18,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 Attendance',
     'App Crashes & Errors': '💥 App Crashes',
     'Sync & Data Issues': '🔄 Sync & Data',
+    'Attendance & Tracking': '📋 Attendance & Tracking',
+    'App Crashes & Performance': '💥 App Crashes & Perf',
+    'Data & Sync': '🔄 Data & Sync',
     
     // Buttons
     'Yes': 'Yes',
@@ -57,6 +60,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 उपस्थिति',
     'App Crashes & Errors': '💥 ऐप क्रैश',
     'Sync & Data Issues': '🔄 सिंक और डेटा',
+    'Attendance & Tracking': '📋 उपस्थिति और ट्रैकिंग',
+    'App Crashes & Performance': '💥 ऐप क्रैश और प्रदर्शन',
+    'Data & Sync': '🔄 डेटा और सिंक',
     
     'Yes': 'हाँ',
     'No': 'नहीं',
@@ -93,6 +99,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 उपस्थिती',
     'App Crashes & Errors': '💥 ॲप क्रॅश',
     'Sync & Data Issues': '🔄 सिंक आणि डेटा',
+    'Attendance & Tracking': '📋 उपस्थिती आणि ट्रॅकिंग',
+    'App Crashes & Performance': '💥 ॲप क्रॅश आणि परफॉर्मन्स',
+    'Data & Sync': '🔄 डेटा आणि सिंक',
     
     'Yes': 'होय',
     'No': 'नाही',
@@ -129,6 +138,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 ଉପସ୍ଥାପନ',
     'App Crashes & Errors': '💥 ଆପ୍ କ୍ରାସ୍',
     'Sync & Data Issues': '🔄 ସିଙ୍କ୍ ଏବଂ ଡାଟା',
+    'Attendance & Tracking': '📋 ଉପସ୍ଥାପନ ଏବଂ ଟ୍ରାକିଂ',
+    'App Crashes & Performance': '💥 ଆପ୍ କ୍ରାସ୍ ଏବଂ ପ୍ରଦର୍ଶନ',
+    'Data & Sync': '🔄 ଡାଟା ଏବଂ ସିଙ୍କ୍',
     
     'Yes': 'ହଁ',
     'No': 'ନାହିଁ',
@@ -165,6 +177,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 উপস্থিতি',
     'App Crashes & Errors': '💥 অ্যাপ ক্র্যাশ',
     'Sync & Data Issues': '🔄 সিঙ্ক এবং ডেটা',
+    'Attendance & Tracking': '📋 উপস্থিতি এবং ট্র্যাকিং',
+    'App Crashes & Performance': '💥 অ্যাপ ক্র্যাশ এবং পারফরম্যান্স',
+    'Data & Sync': '🔄 ডেటా এবং সিঙ্ক',
     
     'Yes': 'হ্যাঁ',
     'No': 'না',
@@ -201,6 +216,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 வருகைப் பதிவு',
     'App Crashes & Errors': '💥 செயலி முடக்கம்',
     'Sync & Data Issues': '🔄 ஒத்திசைவு & தரவு',
+    'Attendance & Tracking': '📋 வருகைப் பதிவு & கண்காணிப்பு',
+    'App Crashes & Performance': '💥 செயலி முடக்கம் & செயல்திறன்',
+    'Data & Sync': '🔄 தரவு & ஒத்திசைவு',
     
     'Yes': 'ஆம்',
     'No': 'இல்லை',
@@ -237,6 +255,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 హాజరు',
     'App Crashes & Errors': '💥 యాప్ క్రాష్‌లు',
     'Sync & Data Issues': '🔄 సింక్ & డేటా',
+    'Attendance & Tracking': '📋 హాజరు & ట్రాకింగ్',
+    'App Crashes & Performance': '💥 యాప్ క్రాష్‌లు & పనితీరు',
+    'Data & Sync': '🔄 డేటా & సింక్',
     
     'Yes': 'అవును',
     'No': 'కాదు',
@@ -273,6 +294,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 ಹಾಜರಾತಿ',
     'App Crashes & Errors': '💥 ಆಪ್ ಕ್ರ್ಯಾಶ್',
     'Sync & Data Issues': '🔄 ಸಿಂಕ್ ಮತ್ತು ಡೇಟಾ',
+    'Attendance & Tracking': '📋 ಹಾಜರಾತಿ ಮತ್ತು ಟ್ರ್ಯಾಕಿಂಗ್',
+    'App Crashes & Performance': '💥 ಆಪ್ ಕ್ರ್ಯಾಶ್ ಮತ್ತು ಕಾರ್ಯಕ್ಷಮತೆ',
+    'Data & Sync': '🔄 ಡೇಟಾ ಮತ್ತು ಸಿಂಕ್',
     
     'Yes': 'ಹೌದು',
     'No': 'ಇಲ್ಲ',
@@ -309,6 +333,9 @@ export const LOCAL_TRANSLATIONS: Record<Language, Record<string, string>> = {
     'Attendance & Check-in': '📋 હાજરી',
     'App Crashes & Errors': '💥 એપ ક્રેશ',
     'Sync & Data Issues': '🔄 સિંક અને ડેટા',
+    'Attendance & Tracking': '📋 હાજરી અને ટ્રેકિંગ',
+    'App Crashes & Performance': '💥 એપ ક્રેશ અને પરફોર્મન્સ',
+    'Data & Sync': '🔄 ડેટા અને સિંક',
     
     'Yes': 'હા',
     'No': 'ના',

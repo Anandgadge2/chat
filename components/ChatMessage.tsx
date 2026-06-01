@@ -69,28 +69,28 @@ export default function ChatMessage({
     return lines.map((line, index) => {
       if (line.startsWith('Possible Reason:')) {
         return (
-          <p key={index} className="text-sm font-semibold text-whatsapp-teal mt-1 mb-2 leading-relaxed">
+          <p key={index} className="text-sm font-semibold text-[#0f766e] mt-1 mb-2 leading-relaxed">
             🔍 {line}
           </p>
         );
       }
       if (line.match(/^\d+\./)) {
         return (
-          <div key={index} className="flex gap-2 text-sm leading-relaxed text-neutral-700 py-0.5 pl-1">
-            <span className="font-bold text-whatsapp-darkTeal">{line.match(/^\d+\./)?.[0]}</span>
+          <div key={index} className="flex gap-2 text-sm leading-relaxed text-slate-600 py-0.5 pl-1">
+            <span className="font-bold text-[#0f766e]">{line.match(/^\d+\./)?.[0]}</span>
             <span className="flex-1">{line.replace(/^\d+\.\s*/, '')}</span>
           </div>
         );
       }
       if (line.startsWith('Here is the solution:') || line.startsWith('Steps to resolve:')) {
         return (
-          <p key={index} className="text-sm font-bold text-neutral-800 mt-2 mb-1">
+          <p key={index} className="text-sm font-bold text-slate-800 mt-2 mb-1">
             {line}
           </p>
         );
       }
       return (
-        <p key={index} className="text-sm text-neutral-700 leading-relaxed mb-1.5 break-words">
+        <p key={index} className="text-sm text-slate-600 leading-relaxed mb-1.5 break-words">
           {line}
         </p>
       );
@@ -101,31 +101,31 @@ export default function ChatMessage({
     <div className={`flex items-start gap-1.5 mb-3.5 w-full ${isUser ? 'justify-end' : 'justify-start'}`}>
       {/* Bot Avatar */}
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-whatsapp-teal flex items-center justify-center text-white text-xs font-bold shadow-sm select-none shrink-0 mt-1">
-          🤖
+        <div className="w-8 h-8 rounded-full bg-[#075e54] flex items-center justify-center text-white text-[10px] font-bold shadow-soft select-none shrink-0 mt-1">
+          PA
         </div>
       )}
 
       {/* Message Bubble wrapper with spacing to accommodate CSS tail */}
-      <div className={`flex flex-col max-w-[72%] relative ${isUser ? 'mr-2' : 'ml-2'}`}>
+      <div className={`flex flex-col max-w-[78%] relative ${isUser ? 'mr-2' : 'ml-2'}`}>
         <div className={`px-3.5 py-2.5 ${isUser ? 'bubble-out' : 'bubble-in'}`}>
           {/* Main Content */}
           <div className="text-sm leading-normal">
             {isUser ? (
-              <p className="text-neutral-800 font-medium break-words leading-normal">{message.content}</p>
+              <p className="text-slate-800 font-medium break-words leading-normal">{message.content}</p>
             ) : (
               <div className="space-y-0.5">{renderFormattedContent(message.content)}</div>
             )}
           </div>
 
           {/* Footer Info (Speak Button + Time + Checkmarks) */}
-          <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[9px] text-neutral-400 select-none">
+          <div className="flex items-center justify-end gap-1.5 mt-1.5 text-[9px] text-slate-400 select-none">
             {/* Audio Button inside Bubble */}
             {!isUser && speechSupported && (
               <button
                 onClick={handleSpeak}
                 className={`p-1 rounded-full ${
-                  isSpeaking ? 'bg-red-50 text-red-500 animate-pulse' : 'hover:bg-neutral-100 text-neutral-500'
+                  isSpeaking ? 'bg-red-50 text-red-500 animate-pulse' : 'hover:bg-slate-100 text-slate-400'
                 } transition-colors mr-auto`}
                 title={isSpeaking ? 'Stop Audio' : 'Play Audio'}
               >
@@ -144,7 +144,7 @@ export default function ChatMessage({
             <span>{formatTime(message.timestamp)}</span>
 
             {isUser && (
-              <span className="text-whatsapp-blue font-bold tracking-tight -ml-0.5">
+              <span className="text-[#0f766e] font-bold tracking-tight -ml-0.5">
                 ✓✓
               </span>
             )}

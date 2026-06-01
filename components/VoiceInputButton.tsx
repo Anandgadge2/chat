@@ -11,8 +11,9 @@ import {
 } from '@/lib/speech';
 
 interface VoiceInputButtonProps {
-  onVoiceInput: (text: string) => void;
+  onVoiceInput: (text: string, isFinal: boolean) => void;
   onStart?: () => void;
+  onListeningChange?: (isListening: boolean) => void;
   onError: (error: string) => void;
   selectedLanguage: Language;
   disabled?: boolean;
@@ -21,6 +22,7 @@ interface VoiceInputButtonProps {
 export default function VoiceInputButton({
   onVoiceInput,
   onStart,
+  onListeningChange,
   onError,
   selectedLanguage,
   disabled = false,
@@ -31,25 +33,35 @@ export default function VoiceInputButton({
 
   useEffect(() => {
     setSupported(isSpeechRecognitionSupported());
+    return () => {
+      if (recognitionRef.current) {
+        stopSpeechRecognition(recognitionRef.current);
+      }
+    };
   }, []);
+
+  const updateListening = (nextListening: boolean) => {
+    setIsListening(nextListening);
+    onListeningChange?.(nextListening);
+  };
 
   const handleStartListening = () => {
     if (disabled) return;
     onStart?.();
-    setIsListening(true);
+    updateListening(true);
     recognitionRef.current = startSpeechRecognition(
       selectedLanguage,
       (text, isFinal) => {
         if (text && text.trim()) {
-          onVoiceInput(text);
+          onVoiceInput(text, isFinal);
         }
       },
       () => {
-        setIsListening(false);
+        updateListening(false);
       },
       (error) => {
         onError(error);
-        setIsListening(false);
+        updateListening(false);
       }
     );
   };
@@ -58,7 +70,7 @@ export default function VoiceInputButton({
     if (recognitionRef.current) {
       stopSpeechRecognition(recognitionRef.current);
     }
-    setIsListening(false);
+    updateListening(false);
   };
 
   if (!supported) {
@@ -72,7 +84,7 @@ export default function VoiceInputButton({
       className={`w-11 h-11 rounded-full flex items-center justify-center transition-all ${
         isListening
           ? 'bg-red-500 hover:bg-red-600 text-white mic-pulse shadow-md scale-105'
-          : 'bg-whatsapp-darkTeal hover:bg-whatsapp-teal text-white hover:shadow shadow-sm active:scale-95'
+          : 'bg-[#0f766e] hover:bg-[#115e59] text-white hover:shadow shadow-sm active:scale-95'
       } disabled:opacity-50 disabled:pointer-events-none shrink-0`}
       title={isListening ? 'Stop listening' : 'Start voice input'}
       type="button"
