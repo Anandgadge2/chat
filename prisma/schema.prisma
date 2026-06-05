@@ -1,0 +1,84 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SupportTicket {
+  id                String                @id @default(uuid())
+  ticketId          String                @unique
+  userName          String
+  userMobile        String
+  userEmail         String?
+  category          String
+  title             String
+  description       String
+  priority          String                @default("Medium") // Low, Medium, High, Critical
+  status            String                @default("Open")   // Open, In Progress, Pending, Resolved, Closed, Archived
+  language          String?
+  assignedTo        String?               // Assigned support staff ID or name
+  chatTranscript    String?               // Stored as JSON stringified in SQLite
+  screenshotUrl     String?
+  repeatedGroup     String?
+  resolutionComment String?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  resolvedAt        DateTime?
+  notes             TicketNote[]
+  statusHistory     TicketStatusHistory[]
+
+  @@index([ticketId])
+  @@index([status])
+  @@index([category])
+  @@index([priority])
+  @@index([createdAt])
+  @@index([assignedTo])
+}
+
+model TicketNote {
+  id        String        @id @default(uuid())
+  ticketId  String
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  note      String
+  addedBy   String?       // Staff name or email
+  createdAt DateTime      @default(now())
+}
+
+model TicketStatusHistory {
+  id        String        @id @default(uuid())
+  ticketId  String
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  oldStatus String?
+  newStatus String
+  changedBy String?
+  createdAt DateTime      @default(now())
+}
+
+model SupportStaff {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  role      String   @default("Support") // Support, Admin
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HostingStorageRecord {
+  id                    String   @id @default(uuid())
+  totalStorageGb        Float
+  usedStorageGb         Float
+  availableStorageGb    Float
+  publicHtmlSizeGb      Float
+  databaseSizeGb        Float
+  emailStorageGb        Float
+  backupSizeGb          Float
+  logsSizeGb            Float
+  temporaryFilesSizeGb  Float
+  lastCheckedAt         DateTime
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
