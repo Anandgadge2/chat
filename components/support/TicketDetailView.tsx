@@ -134,6 +134,7 @@ export default function TicketDetailView({ ticket, staffList, onUpdateTicket }: 
                   rel="noopener noreferrer"
                   className="inline-block border border-slate-200 hover:border-indigo-300 rounded-xl overflow-hidden p-1 bg-slate-50 transition-all hover:shadow-soft group"
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 
                     src={ticket.screenshotUrl} 
                     alt="Ticket screenshot" 
