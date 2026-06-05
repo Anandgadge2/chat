@@ -5,6 +5,8 @@ import { detectRepeatedGroup } from '@/lib/repeatedIssueDetector';
 import { validateTicketInput, sanitizeTicketInput } from '@/lib/validations';
 import { sendSupportAlertEmail } from '@/lib/mailer';
 
+export const dynamic = 'force-dynamic';
+
 // Handle POST request to create a support ticket
 export async function POST(request: NextRequest) {
   try {

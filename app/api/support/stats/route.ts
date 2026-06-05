@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { VALID_CATEGORIES, VALID_STATUSES, VALID_PRIORITIES } from '@/lib/validations';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const today = new Date();
