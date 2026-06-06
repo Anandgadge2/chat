@@ -127,27 +127,6 @@ export default function ChatInput({
           className="flex-1 min-w-0 bg-transparent py-2.5 px-2 text-sm text-slate-700 placeholder-slate-300 focus:outline-none disabled:opacity-50"
         />
 
-        {/* Attachment Pin Icon */}
-        <button
-          type="button"
-          className="p-1.5 text-slate-300 hover:text-slate-400 transition-colors shrink-0"
-          title="Attach file"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-5 h-5 rotate-45"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"
-            />
-          </svg>
-        </button>
       </div>
 
       {/* Right Action Button (Voice Input toggles with Send Button) */}

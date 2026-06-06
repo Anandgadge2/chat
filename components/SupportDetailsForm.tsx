@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import {
   validateFullName,
   validateContactNumber,
-  validateDepartment,
   validateDesignation,
   validateIssueDescription,
 } from '@/lib/validators';
@@ -126,10 +125,6 @@ export default function SupportDetailsForm({
       newErrors.designation = 'Designation is required and must be less than 100 characters';
     }
 
-    if (!validateDepartment(department)) {
-      newErrors.department = 'Department is required and must be less than 100 characters';
-    }
-
     if (!validateIssueDescription(issueDescription)) {
       newErrors.issueDescription =
         'Issue description must be at least 10 characters';
@@ -150,7 +145,7 @@ export default function SupportDetailsForm({
       fullName,
       contactNumber,
       designation,
-      department,
+      department: designation,
       issueDescription,
     });
   };
@@ -201,7 +196,7 @@ export default function SupportDetailsForm({
         )}
       </div>
 
-      {/* Designation */}
+      {/* Organization Name */}
       <div>
         <label htmlFor="designation" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
           {labels.designation}
@@ -217,25 +212,6 @@ export default function SupportDetailsForm({
         />
         {errors.designation && (
           <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.designation}</p>
-        )}
-      </div>
-
-      {/* Department */}
-      <div>
-        <label htmlFor="department" className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">
-          {labels.department}
-        </label>
-        <input
-          id="department"
-          type="text"
-          value={department}
-          onChange={(e) => setDepartment(e.target.value)}
-          placeholder={placeholders.department}
-          disabled={isLoading}
-          className="w-full px-3.5 py-2.5 border border-slate-200 focus:border-[#0f766e] rounded-xl text-sm bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition-all disabled:bg-slate-100 disabled:opacity-60"
-        />
-        {errors.department && (
-          <p className="mt-1 text-[10px] text-red-500 font-medium">{errors.department}</p>
         )}
       </div>
 

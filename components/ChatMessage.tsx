@@ -68,11 +68,7 @@ export default function ChatMessage({
     const lines = content.split('\n');
     return lines.map((line, index) => {
       if (line.startsWith('Possible Reason:')) {
-        return (
-          <p key={index} className="text-sm font-semibold text-[#0f766e] mt-1 mb-2 leading-relaxed">
-            🔍 {line}
-          </p>
-        );
+        return null;
       }
       if (line.match(/^\d+\./)) {
         return (

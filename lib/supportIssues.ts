@@ -6,8 +6,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'A1',
     category: 'Login & Account',
     title: 'User not found during signup',
-    possibleReason:
-      'User account has not been created in the system yet.',
     solutionSteps: [
       'We need to register you in our system. Please share the following details:',
       '1. Your full name',
@@ -33,7 +31,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'A2',
     category: 'Login & Account',
     title: 'Unable to login',
-    possibleReason: 'Wrong credentials or inactive account.',
     solutionSteps: [
       '1. Tap "Forgot Password" on the login screen.',
       '2. Reset your password using your registered email or mobile number.',
@@ -60,7 +57,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'B1',
     category: 'Location, GPS & Geofence',
     title: 'Out of geofence message',
-    possibleReason: 'Low GPS accuracy.',
     solutionSteps: [
       '1. Open the app and check your current location on the map.',
       '2. Move to an open area away from buildings, rooftops, or dense structures.',
@@ -84,7 +80,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'B2',
     category: 'Location, GPS & Geofence',
     title: 'Site or geofence not visible',
-    possibleReason: 'Site assignment is pending after signup.',
     solutionSteps: [
       'Your site has not been assigned yet. Please share the following details:',
       '1. Your full name',
@@ -110,7 +105,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'B3',
     category: 'Location, GPS & Geofence',
     title: 'Geofence missing from map',
-    possibleReason: 'Geofence is not yet created or deleted from system.',
     solutionSteps: [
       'The geofence boundary needs to be created. Please share one of the following:',
       '1. Your current location and site name, OR',
@@ -133,7 +127,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'B4',
     category: 'Location, GPS & Geofence',
     title: 'Location not fetching',
-    possibleReason: 'Location permission denied or GPS disabled.',
     solutionSteps: [
       '1. Go to your phone Settings > Apps > PugArch FSM > Permissions.',
       '2. Set Location permission to "Always Allow".',
@@ -160,7 +153,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'C1',
     category: 'Attendance & Tracking',
     title: 'Face recognition failed',
-    possibleReason: 'Camera permission is denied or face data is not updated.',
     solutionSteps: [
       '1. Go to your phone Settings > Apps > PugArch FSM > Permissions.',
       '2. Allow "Camera" permission.',
@@ -184,7 +176,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'C2',
     category: 'Attendance & Tracking',
     title: 'Attendance not syncing',
-    possibleReason: 'Server or network issue.',
     solutionSteps: [
       '1. Check your internet connection (mobile data or WiFi).',
       '2. Open the PugArch FSM app and go to the Attendance section.',
@@ -207,8 +198,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'C3',
     category: 'Attendance & Tracking',
     title: 'Live tracking not updating',
-    possibleReason:
-      'Location permission is not set to "Always Allow".',
     solutionSteps: [
       '1. Go to your phone Settings > Apps > PugArch FSM > Permissions.',
       '2. Set Location permission to "Always Allow" (not just "While Using App").',
@@ -231,7 +220,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'C4',
     category: 'Attendance & Tracking',
     title: 'Tracking showing wrong route',
-    possibleReason: 'Location permission denied or old app version.',
     solutionSteps: [
       '1. Set Location permission to "Always Allow" in phone Settings > Apps > PugArch FSM > Permissions.',
       '2. Check if an app update is available in Play Store.',
@@ -254,7 +242,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'C5',
     category: 'Attendance & Tracking',
     title: 'Patrolling status not updating',
-    possibleReason: 'Old app version or location permission denied.',
     solutionSteps: [
       '1. Set Location permission to "Always Allow" in phone Settings.',
       '2. Open Play Store, search for "PugArch FSM", and update to the latest version.',
@@ -278,7 +265,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'D1',
     category: 'App Crashes & Performance',
     title: 'App crashing frequently',
-    possibleReason: 'Old app version or device compatibility issue.',
     solutionSteps: [
       '1. Open Google Play Store and search for "PugArch FSM".',
       '2. If an "Update" button is available, tap it to update the app.',
@@ -301,7 +287,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'D2',
     category: 'App Crashes & Performance',
     title: 'Slow app performance',
-    possibleReason: 'Low device RAM or too many background apps.',
     solutionSteps: [
       '1. Close all unused apps running in the background.',
       '2. Restart your phone completely.',
@@ -325,7 +310,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'D3',
     category: 'App Crashes & Performance',
     title: 'App not installing',
-    possibleReason: 'Unsupported Android version or low storage space.',
     solutionSteps: [
       '1. Check your Android version: Go to Settings > About Phone > Android Version.',
       '2. PugArch FSM requires Android 8.0 or above.',
@@ -350,7 +334,6 @@ export const SUPPORT_ISSUES: SupportIssue[] = [
     code: 'E1',
     category: 'Data & Sync',
     title: 'Data loss after logout',
-    possibleReason: 'Offline data was not synced before logout.',
     solutionSteps: [
       '1. Always ensure you have an active internet connection (mobile data or WiFi).',
       '2. Before logging out, open the app and look for a "Sync" or "Upload" button.',
