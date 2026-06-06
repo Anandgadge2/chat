@@ -2,7 +2,7 @@ export const APP_NAME = 'PugArch FSM Support';
 export const APP_DESCRIPTION = 'Get instant help for common app issues';
 
 export const WELCOME_MESSAGE = `Hi! Welcome to ${APP_NAME}.
-I can help you resolve common app issues instantly.
+I can help you resolve issues instantly.
 Please select the type of problem you are facing.`;
 
 export const SOMETHING_ELSE_MESSAGE =
@@ -40,7 +40,7 @@ export const CONFIDENCE_THRESHOLDS = {
 export const FORM_LABELS = {
   fullName: 'Full Name *',
   contactNumber: 'Contact Number *',
-  designation: 'Designation *',
+  designation: 'Organization Name *',
   department: 'Department *',
   issueDescription: 'Describe Your Issue *',
 };
@@ -48,7 +48,7 @@ export const FORM_LABELS = {
 export const FORM_PLACEHOLDERS = {
   fullName: 'e.g., John Doe',
   contactNumber: 'e.g., 9876543210',
-  designation: 'e.g., Security Guard',
+  designation: 'e.g., PugArch Pvt. Ltd.',
   department: 'e.g., Security',
   issueDescription: 'Please describe the issue you faced...',
 };

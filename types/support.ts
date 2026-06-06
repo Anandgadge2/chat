@@ -2,7 +2,7 @@ export type SupportIssue = {
   code: string;
   category: string;
   title: string;
-  possibleReason: string;
+  possibleReason?: string;
   solutionSteps: string[];
   requiresUserDetails: boolean;
   escalationRequiredIfNotSolved: boolean;
